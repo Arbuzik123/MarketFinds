@@ -2,54 +2,115 @@ import sys
 import asyncio
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
 from qasync import QEventLoop  # Импорт QEventLoop для интеграции asyncio с PyQt
-from multiprocessing import Process
 
-# Функция для запуска внешнего скрипта
-async def run_process(script_path):
-    """Асинхронный запуск внешнего скрипта и вывод его результатов в реальном времени."""
+# Асинхронные функции поиска
+async def search_on_ozon():
+    print("Запуск поиска на Ozon...")
+
     try:
+        # Асинхронный запуск скрипта по указанному пути
         process = await asyncio.create_subprocess_exec(
             r"C:\Users\user\KivyFile\MarketFinds\.venv\Scripts\python.exe",
-            script_path,
+            r"C:\Users\user\PycharmProjects\OzonFind\main.py",
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE
         )
 
-        # Асинхронное чтение и вывод stdout и stderr в реальном времени
-        while True:
-            stdout_line = await process.stdout.readline()
-            stderr_line = await process.stderr.readline()
+        # Ожидание завершения процесса и получение вывода
+        stdout, stderr = await process.communicate()
 
-            if not stdout_line and not stderr_line:
-                break
-
-            if stdout_line:
-                print(stdout_line.decode().strip())
-
-            if stderr_line:
-                print(stderr_line.decode().strip())
-
-        await process.wait()  # Ожидание завершения процесса
+        # Выводы процесса
+        print(f"Вывод программы:\n{stdout.decode()}")
+        if stderr:
+            print(f"Ошибки:\n{stderr.decode()}")
 
     except Exception as e:
         print(f"Произошла ошибка при запуске скрипта: {e}")
 
-# Функции для запуска поиска в отдельных процессах
-def search_on_ozon():
-    asyncio.run(run_process(r"C:\Users\user\PycharmProjects\OzonFind\main.py"))
     print("Поиск на Ozon завершен.")
+    await asyncio.sleep(2)  # Симуляция асинхронного запроса
 
-def search_on_yandex():
-    asyncio.run(run_process(r"C:\Users\user\PycharmProjects\YandexFind\main.py"))
+
+async def search_on_yandex():
+    print("Запуск поиска на Yandex...")
+
+    try:
+        # Асинхронный запуск скрипта по указанному пути
+        process = await asyncio.create_subprocess_exec(
+            r"C:\Users\user\KivyFile\MarketFinds\.venv\Scripts\python.exe",
+            r"C:\Users\user\PycharmProjects\YandexFind\main.py",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+
+        # Ожидание завершения процесса и получение вывода
+        stdout, stderr = await process.communicate()
+
+        # Выводы процесса
+        print(f"Вывод программы:\n{stdout.decode()}")
+        if stderr:
+            print(f"Ошибки:\n{stderr.decode()}")
+
+    except Exception as e:
+        print(f"Произошла ошибка при запуске скрипта: {e}")
+
     print("Поиск на Yandex завершен.")
+    await asyncio.sleep(2)  # Симуляция асинхронного запроса
 
-def search_on_sbermegamarket():
-    asyncio.run(run_process(r"C:\Users\user\PycharmProjects\SberMegaFind\main.py"))
+
+async def search_on_sbermegamarket():
+    print("Запуск поиска на Sbermegamarket...")
+
+    try:
+        # Асинхронный запуск скрипта по указанному пути
+        process = await asyncio.create_subprocess_exec(
+            r"C:\Users\user\KivyFile\MarketFinds\.venv\Scripts\python.exe",
+            r"C:\Users\user\PycharmProjects\SberMegaFind\main.py",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+
+        # Ожидание завершения процесса и получение вывода
+        stdout, stderr = await process.communicate()
+
+        # Выводы процесса
+        print(f"Вывод программы:\n{stdout.decode()}")
+        if stderr:
+            print(f"Ошибки:\n{stderr.decode()}")
+
+    except Exception as e:
+        print(f"Произошла ошибка при запуске скрипта: {e}")
+
     print("Поиск на Sbermegamarket завершен.")
+    await asyncio.sleep(2)  # Симуляция асинхронного запроса
 
-def search_on_wildberries():
-    asyncio.run(run_process(r"C:\Users\user\PycharmProjects\WildberriesFind\main.py"))
+
+async def search_on_wildberries():
+    print("Запуск поиска на Wildberries...")
+
+    try:
+        # Асинхронный запуск скрипта по указанному пути
+        process = await asyncio.create_subprocess_exec(
+            r"C:\Users\user\KivyFile\MarketFinds\.venv\Scripts\python.exe",
+            r"C:\Users\user\PycharmProjects\WildberriesFind\main.py",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+
+        # Ожидание завершения процесса и получение вывода
+        stdout, stderr = await process.communicate()
+
+        # Выводы процесса
+        print(f"Вывод программы:\n{stdout.decode()}")
+        if stderr:
+            print(f"Ошибки:\n{stderr.decode()}")
+
+    except Exception as e:
+        print(f"Произошла ошибка при запуске скрипта: {e}")
+
     print("Поиск на Wildberries завершен.")
+    await asyncio.sleep(2)  # Симуляция асинхронного запроса
+
 
 # Основное окно приложения
 class MainWindow(QMainWindow):
@@ -67,10 +128,10 @@ class MainWindow(QMainWindow):
         self.btn_wb = QPushButton("Запустить поиск на Wildberries")
 
         # Привязка кнопок к функциям
-        self.btn_ozon.clicked.connect(lambda: self.run_in_process(search_on_ozon))
-        self.btn_yandex.clicked.connect(lambda: self.run_in_process(search_on_yandex))
-        self.btn_sber.clicked.connect(lambda: self.run_in_process(search_on_sbermegamarket))
-        self.btn_wb.clicked.connect(lambda: self.run_in_process(search_on_wildberries))
+        self.btn_ozon.clicked.connect(lambda: self.run_async_task(search_on_ozon))
+        self.btn_yandex.clicked.connect(lambda: self.run_async_task(search_on_yandex))
+        self.btn_sber.clicked.connect(lambda: self.run_async_task(search_on_sbermegamarket))
+        self.btn_wb.clicked.connect(lambda: self.run_async_task(search_on_wildberries))
 
         # Добавление кнопок в макет
         layout.addWidget(self.btn_ozon)
@@ -83,10 +144,10 @@ class MainWindow(QMainWindow):
         container.setLayout(layout)
         self.setCentralWidget(container)
 
-    def run_in_process(self, task):
-        """Запуск задачи в отдельном процессе для изоляции."""
-        process = Process(target=task)
-        process.start()
+    def run_async_task(self, task):
+        """Запуск асинхронной задачи в основном событийном цикле."""
+        asyncio.create_task(task())  # Создание и запуск задачи напрямую в событийном цикле
+
 
 # Запуск приложения
 if __name__ == "__main__":
