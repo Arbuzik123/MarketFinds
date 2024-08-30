@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout,
 from qasync import QEventLoop
 from multiprocessing import Process
 import time
+import uuid
 
 # Функция для запуска внешнего скрипта
 async def run_process(script_path):
@@ -40,21 +41,26 @@ async def run_process(script_path):
 
 # Функции для запуска поиска в отдельных процессах с задержкой
 def search_on_ozon():
+
+    time.sleep(8)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\OzonFind\main.py"))
     print("Поиск на Ozon завершен.")
 
 
 def search_on_yandex():
+    time.sleep(6)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\YandexFind\main.py"))
     print("Поиск на Yandex завершен.")
 
 
 def search_on_sbermegamarket():
+    time.sleep(4)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\SberMegaFind\main.py"))
     print("Поиск на SberMegaMarket завершен.")
 
 
 def search_on_wildberries():
+    time.sleep(2)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\WildberriesFind\main.py"))
     print("Поиск на Wildberries завершен.")
 
@@ -127,7 +133,6 @@ class MainWindow(QMainWindow):
 
         # Вызываем функцию завершения
         all_processes_done()
-
 
 # Запуск приложения
 if __name__ == "__main__":
