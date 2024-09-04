@@ -42,7 +42,7 @@ async def run_process(script_path):
 # Функции для запуска поиска в отдельных процессах с задержкой
 def search_on_ozon():
 
-    time.sleep(8)
+    time.sleep(9)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\OzonFind\main.py"))
     print("Поиск на Ozon завершен.")
 
@@ -54,13 +54,12 @@ def search_on_yandex():
 
 
 def search_on_sbermegamarket():
-    time.sleep(4)
+    time.sleep(3)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\SberMegaFind\main.py"))
     print("Поиск на SberMegaMarket завершен.")
 
 
 def search_on_wildberries():
-    time.sleep(2)
     asyncio.run(run_process(r"C:\Users\user\PycharmProjects\WildberriesFind\main.py"))
     print("Поиск на Wildberries завершен.")
 
@@ -116,8 +115,8 @@ class MainWindow(QMainWindow):
 
     def run_all_searches(self):
         """Запуск всех поисков с задержкой для предотвращения конфликтов."""
-        tasks = [search_on_ozon, search_on_yandex, search_on_sbermegamarket, search_on_wildberries]
-
+        # tasks = [search_on_ozon, search_on_yandex, search_on_sbermegamarket, search_on_wildberries]
+        tasks = [search_on_ozon]
         # Запускаем все процессы с задержкой в 1 секунду
         for task in tasks:
             self.run_in_process(task)
